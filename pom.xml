@@ -234,9 +234,10 @@
 	        	<artifactId>maven-war-plugin</artifactId>
 	        	<version>2.3</version>
 	        	<configuration>
-	          		<warName>coach</warName>
-	        		</configuration>
-	      		</plugin>
+					<outputDirectory>webapps</outputDirectory>
+					<warName>ilovefitcoach</warName>
+				</configuration>
+      		</plugin>
    		</plugins>
   	</build>
 </profile>
