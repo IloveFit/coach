@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.Plan" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="plan">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="personaltrainer.model.Catalogo" embed-xml="true" fetch="select" insert="true" name="catalogoByNivel" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="nivel" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Catalogo" embed-xml="true" fetch="select" insert="true" name="catalogoByMaquina" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="maquina" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Catalogo" embed-xml="true" fetch="select" insert="true" name="catalogoByObjetivo" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="objetivo" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nombre" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="descripcion" optimistic-lock="true" type="string" unique="false">
+            <column length="1000" name="descripcion"/>
+        </property>
+        <property generated="never" lazy="false" name="duracion" optimistic-lock="true" type="int" unique="false">
+            <column name="duracion" not-null="true">
+                <comment>Duracion en semanas</comment>
+            </column>
+        </property>
+        <property generated="never" lazy="false" name="activo" optimistic-lock="true" type="string" unique="false">
+            <column length="1" name="activo" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="planRutinas" optimistic-lock="true" sort="unsorted" table="plan_rutina" cascade="save-update">
+            <key on-delete="noaction">
+                <column name="id_plan" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.PlanRutina" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="planClientes" optimistic-lock="true" sort="unsorted" table="plan_cliente" cascade="save-update">
+            <key on-delete="noaction">
+                <column name="id_plan" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.PlanCliente" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

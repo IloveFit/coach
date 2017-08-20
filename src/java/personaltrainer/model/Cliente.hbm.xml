@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.Cliente" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="cliente">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="personaltrainer.model.Catalogo" embed-xml="true" fetch="select" insert="true" name="catalogoByNivelFisico" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="nivel_fisico"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Catalogo" embed-xml="true" fetch="select" insert="true" name="catalogoBySexo" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="sexo"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Catalogo" embed-xml="true" fetch="select" insert="true" name="catalogoByObjetivo" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="objetivo"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nombre" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="apellidos" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="apellidos" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="email" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="pass" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="pass" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="edad" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="edad"/>
+        </property>
+        <property generated="never" lazy="false" name="altura" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="altura"/>
+        </property>
+        <property generated="never" lazy="false" name="peso" optimistic-lock="true" type="java.lang.Byte" unique="false">
+            <column name="peso" precision="2" scale="0"/>
+        </property>
+        <property generated="never" lazy="false" name="fechaRegistro" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="fecha_registro" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="baja" optimistic-lock="true" type="string" unique="false">
+            <column length="1" name="baja" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="activo" optimistic-lock="true" type="string" unique="false">
+            <column length="1" name="activo" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="clienteCoaches" optimistic-lock="true" sort="unsorted" table="cliente_coach">
+            <key on-delete="noaction">
+                <column name="id_cliente" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.ClienteCoach" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="mensajeses" optimistic-lock="true" sort="unsorted" table="mensajes">
+            <key on-delete="noaction">
+                <column name="id_cliente" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Mensajes" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="planClientes" optimistic-lock="true" sort="unsorted" table="plan_cliente">
+            <key on-delete="noaction">
+                <column name="id_cliente" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.PlanCliente" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

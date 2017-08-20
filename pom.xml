@@ -1,81 +1,193 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>coach</groupId>
-	<artifactId>coach</artifactId>
-	<packaging>war</packaging>
-	<version>1.0</version>
-	<name>coach</name>
-	<repositories>
-		<repository>
-			<id>eap</id>
-			<url>http://maven.repository.redhat.com/techpreview/all</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>eap</id>
-			<url>http://maven.repository.redhat.com/techpreview/all</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<maven.compiler.target>1.6</maven.compiler.target>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.2-1003-jdbc4</version>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>personaltrainer</groupId>
+  <artifactId>personaltrainer</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  
+    <dependencies>
+  	<dependency>
+    	<groupId>org.apache.struts</groupId>
+	    <artifactId>struts2-core</artifactId>
+	    <version>2.5.1</version>
+	</dependency>
+
+  	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>5.2.10.Final</version>
+	</dependency>
+  	<dependency>
+	    <groupId>mysql</groupId>
+	    <artifactId>mysql-connector-java</artifactId>
+	    <version>5.1.36</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.jgeppert.struts2.jquery</groupId>
+	    <artifactId>struts2-jquery-plugin</artifactId>
+	    <version>4.0.2</version>
+	</dependency>
+		
+	<dependency>
+	    <groupId>javax</groupId>
+	    <artifactId>javaee-api</artifactId>
+	    <version>7.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.geronimo.specs</groupId>
+	    <artifactId>geronimo-jta_1.1_spec</artifactId>
+	    <version>1.1.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.struts</groupId>
+	    <artifactId>struts2-tiles-plugin</artifactId>
+	    <version>2.5.10.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.logging.log4j</groupId>
+	    <artifactId>log4j-api</artifactId>
+	    <version>2.8.2</version>
+	</dependency>
+		
+	<dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>2.4</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <version>1.7.12</version>
+    </dependency>
+    
+    <!-- pasarela de pago -->
+    <dependency>
+	  	<groupId>com.miguelangeljulvez.easyredsys</groupId>
+	  	<artifactId>easyredsys-client</artifactId>
+	  	<version>1.0.0</version>
+	</dependency>
+	<dependency>
+  		<groupId>com.miguelangeljulvez.easyredsys</groupId>
+  		<artifactId>easyredsys-server</artifactId>
+  		<version>1.0.0</version>
+	</dependency>
+		
+		
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <warSourceDirectory>WebContent</warSourceDirectory>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+    <finalName>personaltrainer</finalName>
+  </build>
+
+<profiles>
+	<profile>
+<!-- When built in OpenShift the openshift profile will be used when invoking mvn. -->
+<!-- Use this profile for any OpenShift specific customization your app will need. -->
+<!-- By default that is to put the resulting archive into the deployments folder. -->
+<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+	<id>openshift</id>
+	
+	    <dependencies>
+		  	<dependency>
+		    	<groupId>org.apache.struts</groupId>
+			    <artifactId>struts2-core</artifactId>
+			    <version>2.5.1</version>
+			</dependency>
+		
+		  	<dependency>
+			    <groupId>org.hibernate</groupId>
+			    <artifactId>hibernate-core</artifactId>
+			    <version>5.2.10.Final</version>
+			</dependency>
+		  	<dependency>
+			    <groupId>mysql</groupId>
+			    <artifactId>mysql-connector-java</artifactId>
+			    <version>5.1.36</version>
+			</dependency>
+			<dependency>
+			    <groupId>com.jgeppert.struts2.jquery</groupId>
+			    <artifactId>struts2-jquery-plugin</artifactId>
+			    <version>4.0.2</version>
+			</dependency>
+				
+			<dependency>
+			    <groupId>javax</groupId>
+			    <artifactId>javaee-api</artifactId>
+			    <version>7.0</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.geronimo.specs</groupId>
+			    <artifactId>geronimo-jta_1.1_spec</artifactId>
+			    <version>1.1.1</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.struts</groupId>
+			    <artifactId>struts2-tiles-plugin</artifactId>
+			    <version>2.5.10.1</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.logging.log4j</groupId>
+			    <artifactId>log4j-api</artifactId>
+			    <version>2.8.2</version>
+			</dependency>
+				
+			<dependency>
+		        <groupId>org.apache.logging.log4j</groupId>
+		        <artifactId>log4j-slf4j-impl</artifactId>
+		        <version>2.4</version>
+		    </dependency>
+		
+		    <dependency>
+		        <groupId>org.slf4j</groupId>
+		        <artifactId>slf4j-simple</artifactId>
+		        <version>1.7.12</version>
+		    </dependency>
+		    
+		    <!-- pasarela de pago -->
+		    <dependency>
+			  	<groupId>com.miguelangeljulvez.easyredsys</groupId>
+			  	<artifactId>easyredsys-client</artifactId>
+			  	<version>1.0.0</version>
+			</dependency>
+			<dependency>
+		  		<groupId>com.miguelangeljulvez.easyredsys</groupId>
+		  		<artifactId>easyredsys-server</artifactId>
+		  	<version>1.0.0</version>
 		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.25</version>
-		</dependency>     
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.0.1</version>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-	<profiles>
-		<profile>
-			<!-- When built in OpenShift the 'openshift' profile will be used when 
-				invoking mvn. -->
-			<!-- Use this profile for any OpenShift specific customization your app 
-				will need. -->
-			<!-- By default that is to put the resulting archive into the 'webapps' 
-				folder. -->
-			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-			<id>openshift</id>
-			<build>
-				<finalName>coach</finalName>
-				<plugins>
-					<plugin>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>2.1.1</version>
-						<configuration>
-							<outputDirectory>webapps</outputDirectory>
-							<warName>ROOT</warName>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+ 	 </dependencies>
+	
+	<build>
+		<finalName>personaltrainer</finalName>
+	    <plugins>
+	      	<plugin>
+	        	<artifactId>maven-war-plugin</artifactId>
+	        	<version>2.3</version>
+	        	<configuration>
+	          		<warName>personaltrainer</warName>
+	        		</configuration>
+	      		</plugin>
+   		</plugins>
+  	</build>
+</profile>
+    </profiles>
 </project>

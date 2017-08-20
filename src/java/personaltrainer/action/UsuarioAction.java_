@@ -1,0 +1,173 @@
+package personaltrainer.action;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.ServletContext;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.struts2.util.ServletContextAware;
+import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
+
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+
+import personaltrainer.dao.UsuarioDao;
+import personaltrainer.dao.UsuarioDaoImpl;
+import personaltrainer.model.Usuario;
+import personaltrainer.util.EncriptarPass;
+
+public class UsuarioAction extends ActionSupport implements Action, ModelDriven<Usuario>, ServletContextAware {
+	
+	/**
+	 * serialVersionUID
+	 */
+	private static final long serialVersionUID = 2818297897801064349L;
+	
+	private Usuario user;
+	
+	private Date strFechaNacimiento;
+	
+	private static final String EMAIL_PATTERN =
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+	
+	public String login() throws Exception {
+		try {
+			SessionFactory sf = (SessionFactory) ctx.getAttribute("SessionFactory");
+			UsuarioDao userDAO = new UsuarioDaoImpl(sf);
+			
+			Usuario usuario = userDAO.getUsuario(getModel().getEmail());
+	
+			if (usuario != null) {
+				String pass = getModel().getPassword();
+				if (!usuario.getPassword().equals(EncriptarPass.encriptarPassword(pass))) {
+					return ERROR;
+				}
+			}
+			return SUCCESS;
+		} catch (Exception e) {
+			return ERROR;
+		}
+	}
+	
+	public String registro() {
+		SessionFactory sf = (SessionFactory) ctx.getAttribute("SessionFactory");
+		UsuarioDao userDAO = new UsuarioDaoImpl(sf);
+		Date sysdate = new Date();
+		getModel().setFechaAlta(new java.sql.Date(sysdate.getTime()));
+		
+		//mapeamos la fecha de nacimiento
+		getModel().setFechaNacimiento(new java.sql.Date(getStrFechaNacimiento().getTime()));
+		
+		//encriptamos la clave
+		String password = getModel().getPassword();
+		getModel().setPassword(EncriptarPass.encriptarPassword(password));
+		
+		Usuario usuarioNuevo = new Usuario();
+		
+		try {
+			usuarioNuevo = userDAO.altaUsuario(getModel());
+		} catch (ConstraintViolationException e) {
+			addFieldError("user.email",getText("email.duplicado"));
+			getModel().setPassword(null);
+			return INPUT;
+		} catch (Exception e) {
+			usuarioNuevo = null;
+		}
+		
+		
+		if (usuarioNuevo != null) {
+			return SUCCESS;
+		} else {
+			return ERROR;
+		}
+		
+	}
+	
+	public void validateRegistro() {
+		 List<String> args = new ArrayList<String>();
+		 
+		
+		if (StringUtils.isEmpty(getModel().getNombre())) {
+			args.add(getText("usuario.nombre"));
+			addFieldError("user.nombre",getText("campo.obligatorio", args));
+		} 
+		if(StringUtils.isEmpty(getModel().getApellido())) {
+			args.clear();
+			args.add(getText("usuario.apellido"));
+			addFieldError("user.apellido",getText("campo.obligatorio", args));
+		} 
+		if(StringUtils.isEmpty(getModel().getDni())) {
+			args.clear();
+			args.add(getText("usuario.dni"));
+			addFieldError("user.dni",getText("campo.obligatorio", args));
+		} 
+		
+		if(StringUtils.isEmpty(getModel().getEmail())) {
+			args.clear();
+			args.add(getText("usuario.email"));
+			addFieldError("user.email",getText("campo.obligatorio", args));
+		} else {
+			Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+			Matcher matcher = pattern.matcher(getModel().getEmail());
+			if (!matcher.matches()) {
+				addFieldError("user.email",getText("email.formato.ko", args));
+			}
+		}
+		if (getStrFechaNacimiento() == null) {
+			args.clear();
+			args.add(getText("usuario.fechaNacimiento"));
+			addFieldError("usuario.fechaNacimiento",getText("campo.obligatorio", args));
+		}
+		if(StringUtils.isEmpty(getModel().getPassword())) {
+			args.clear();
+			args.add(getText("usuario.password"));
+			addFieldError("user.password",getText("campo.obligatorio", args));
+		}
+	}
+	
+	public String listar () {
+		SessionFactory sf = (SessionFactory) ctx.getAttribute("SessionFactory");
+		UsuarioDao userDAO = new UsuarioDaoImpl(sf);
+		
+		List<Usuario> listUsuarios = userDAO.listarUsuarios();
+		
+		return SUCCESS;
+	}
+	
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+	@Override
+	public Usuario getModel() {
+		return user;
+	}
+	
+	private ServletContext ctx;
+
+	@Override
+	public void setServletContext(ServletContext sc) {
+		this.ctx = sc;
+	}
+
+	public Date getStrFechaNacimiento() {
+		return strFechaNacimiento;
+	}
+
+	public void setStrFechaNacimiento(Date strFechaNacimiento) {
+		this.strFechaNacimiento = strFechaNacimiento;
+	}
+	
+}

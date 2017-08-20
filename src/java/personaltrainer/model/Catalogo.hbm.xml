@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.Catalogo" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="catalogo">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="tipCatalogo" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="tip_catalogo" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="valor" optimistic-lock="true" type="int" unique="false">
+            <column name="valor" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nombre" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="descripcion" optimistic-lock="true" type="string" unique="false">
+            <column length="250" name="descripcion"/>
+        </property>
+        <property generated="never" lazy="false" name="orden" optimistic-lock="true" type="int" unique="false">
+            <column name="orden" not-null="true">
+                <comment>Onden en el que queremos que aparezca el catalogo.</comment>
+            </column>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="clientesForNivelFisico" optimistic-lock="true" sort="unsorted" table="cliente">
+            <key on-delete="noaction">
+                <column name="nivel_fisico" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Cliente" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="plansForNivel" optimistic-lock="true" sort="unsorted" table="plan">
+            <key on-delete="noaction">
+                <column name="nivel" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Plan" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="ejercicios" optimistic-lock="true" sort="unsorted" table="ejercicio">
+            <key on-delete="noaction">
+                <column name="tipo_ejercicio" not-null="true">
+                    <comment>Distinguimos si un ejecicio se mide en tiempo o en numero de repeticiones.</comment>
+                </column>
+            </key>
+            <one-to-many class="personaltrainer.model.Ejercicio" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="plansForMaquina" optimistic-lock="true" sort="unsorted" table="plan">
+            <key on-delete="noaction">
+                <column name="maquina" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Plan" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="clientesForSexo" optimistic-lock="true" sort="unsorted" table="cliente">
+            <key on-delete="noaction">
+                <column name="sexo" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Cliente" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="plansForObjetivo" optimistic-lock="true" sort="unsorted" table="plan">
+            <key on-delete="noaction">
+                <column name="objetivo" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Plan" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="clientesForObjetivo" optimistic-lock="true" sort="unsorted" table="cliente">
+            <key on-delete="noaction">
+                <column name="objetivo" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Cliente" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="coaches" optimistic-lock="true" sort="unsorted" table="coach">
+            <key on-delete="noaction">
+                <column name="tipo" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Coach" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

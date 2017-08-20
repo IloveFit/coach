@@ -1,0 +1,37 @@
+/* enlace mensajes cabecera */
+.skin-blue .main-header .navbar .nav>li>div>a {
+	color: #FFFFFF;
+}
+@media (min-width: 768px) {
+	.navbar-nav>li>div>a {
+		padding-top: 15px; 
+		padding-bottom: 15px;
+		line-height: 20px;
+	}
+}
+.nav>li>div>a {
+	position: relative;
+	display: block;
+	padding: 15px 15px 10px 15px;
+}
+.main-header .navbar .nav > li > div > a > .label {
+	position: absolute;
+	top: 9px;
+	right: 7px;
+	text-align: center;
+	font-size: 9px;
+	padding: 2px 3px;
+	line-height: .9;
+}
+
+/* modificar avatar */
+.mod-profile-user-img {
+    margin: 0 auto;
+    width: 200px;
+    padding: 3px;
+    border: 3px solid #d2d6de;
+}
+.form-avatar {margin: 35px 20px;}
+
+/* Generales */
+.oculto {display: none;}

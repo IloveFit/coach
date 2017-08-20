@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>    
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="publicLayout" template="/ilovefitcoach/tiles/public-template.jsp">
+		<put-attribute name="title" value="IloveFitCoach || Home" />
+        <put-attribute name="headerIcons" value="/ilovefitcoach/tiles/header-icons.jsp" />
+        <put-attribute name="headerLinks" value="/ilovefitcoach/tiles/header-links.jsp" />
+		<put-attribute name="menu" value="/ilovefitcoach/tiles/menu.jsp" />
+		<put-attribute name="buscador" value="/ilovefitcoach/tiles/buscador.jsp" />
+		<put-attribute name="menuMovil" value="/ilovefitcoach/tiles/menu-movil.jsp" />
+		<put-attribute name="heroContent" value="/ilovefitcoach/tiles/hero-content.jsp" />
+		<put-attribute name="crumbs" value="/ilovefitcoach/tiles/crumbs.jsp" />
+        <put-attribute name="content" value="/blank.jsp" />
+        <put-attribute name="subscribe" value="/ilovefitcoach/tiles/subscribe.jsp" />
+        <put-attribute name="footer" value="/ilovefitcoach/tiles/footer.jsp" />
+    </definition>
+    
+    <definition name="public.home" extends="publicLayout">
+    	<put-attribute name="crumbs" value="" />
+    	<put-attribute name="content" value="/ilovefitcoach/home.jsp" />
+    </definition>
+    <definition name="public.completarRegistro" extends="publicLayout">
+    	<put-attribute name="crumbs" value="" />
+    	<put-attribute name="content" value="/ilovefitcoach/completar-registro.jsp" />
+    </definition>
+    <definition name="public.registro" extends="publicLayout">
+    	<put-attribute name="crumbs" value="" />
+    	<put-attribute name="content" value="/ilovefitcoach/registro.jsp" />
+    </definition>
+</tiles-definitions>

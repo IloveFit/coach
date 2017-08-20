@@ -1,0 +1,140 @@
+package personaltrainer.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.PersistenceException;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
+
+import personaltrainer.model.Usuario;
+
+public class UsuarioDaoImpl implements UsuarioDao {
+	
+	private SessionFactory sf;
+	
+	public UsuarioDaoImpl(SessionFactory sf){
+		this.sf = sf;
+	}
+
+	@Override
+	public Usuario getUserByCredentials(String userId, String password) {
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from Usuario where id=:id and pwd=:pwd");
+		query.setString("id", userId); query.setString("pwd", password);
+		Usuario user = (Usuario) query.uniqueResult();
+		if(user != null){
+			System.out.println("User Retrieved from DB::"+user);
+		}
+		tx.commit();session.close();
+		return user;
+	}
+
+	public Usuario altaUsuario (Usuario usuario) {
+		try {
+			Session session = sf.openSession();
+			Transaction tx = session.beginTransaction();
+			
+			session.save(usuario);
+			
+			tx.commit();
+			session.close();
+			
+			return usuario;
+		} catch (PersistenceException pe) {
+			if (pe.getCause().getCause().getMessage().contains("Duplicate entry")) {
+				throw new ConstraintViolationException(pe.getCause().getCause().getMessage(), null, null);
+			}
+			System.out.println(pe.getStackTrace());
+			return null;
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+			return null;
+		}
+		
+	}
+	
+	public Usuario modificarUsuario (Usuario usuario) {
+		try {
+			Session session = sf.openSession();
+			Transaction tx = session.beginTransaction();
+			
+			session.update(usuario);
+			
+			tx.commit();
+			session.close();
+			
+			return usuario;
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * Elimina un {@link Usuario} a partir de un email
+	 * 
+	 * @param email
+	 */
+	public void eliminarUsuario (String email) {
+		try {
+			Session session = sf.openSession();
+			Transaction tx = session.beginTransaction();
+			
+			Usuario usuario = (Usuario) session.get(Usuario.class, email);
+			session.delete(usuario);
+			
+			tx.commit();
+			session.close();
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+		}
+	}
+	
+	/**
+	 * Devuelve un {@link Usuario} a partir de un email
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public Usuario getUsuario (String email) {
+		Usuario usuario = null;
+		try {
+			Session session = sf.openSession();
+			Transaction tx = session.beginTransaction();
+			
+			usuario = (Usuario) session.get(Usuario.class, email);
+			
+			tx.commit();
+			session.close();
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+		}
+		
+		return usuario;
+	}
+	
+	public List<Usuario> listarUsuarios () {
+		List<Usuario> lsLtUsuarios = new ArrayList<Usuario>();
+		
+		try {
+			Session session = sf.openSession();
+			Transaction tx = session.beginTransaction();
+			
+			lsLtUsuarios = (ArrayList<Usuario>)session.createNativeQuery("SELECT * FROM usuario").list();
+			
+			tx.commit();
+			session.close();
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+		}
+		
+		return lsLtUsuarios;
+	}
+}

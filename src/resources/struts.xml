@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+	
+	<constant name="struts.convention.result.path" value="/"></constant>
+	
+	<constant name="struts.ui.theme" value="ilovefit" />
+	<constant name="struts.ui.templateDir" value="template" />
+	
+	<constant name="struts.multipart.maxSize" value="100485760" />
+	
+	<package name="personaltrainer-package" extends="struts-default" abstract="true">
+		<result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+        </result-types>
+	</package>
+	
+	<!-- 
+	<package name="user" namespace="/User" extends="personaltrainer-package">
+		<action name="registro">
+			<result>/usuario/registro.jsp</result>
+		</action>
+		<action name="AltaUsuario" class="personaltrainer.action.UsuarioAction" method="registro">
+			<result name="success">/usuario/login.jsp</result>
+			<result name="input">/usuario/registro.jsp</result>
+			<result name="error">/usuario/error.jsp</result>
+		</action>
+		<action name="ListaUsuarios" class="personaltrainer.action.UsuarioAction" method="listar">
+			<result name="success">/usuario/login.jsp</result>
+			<result name="input">/usuario/registro.jsp</result>
+			<result name="error">/usuario/error.jsp</result>
+		</action>
+		<action name="home">
+			<result>/usuario/login.jsp</result>
+		</action>
+		<action name="login" class="personaltrainer.action.UsuarioAction" method="login">
+			<result name="success">/usuario/wellcome.jsp</result>
+			<result name="error">/usuario/error.jsp</result>
+		</action>
+	
+	</package>
+	 -->
+	
+   	<constant name="struts.custom.i18n.resources" value="messages.Admin,messages.Rutina,messages.Ejercicio,messages.Coach,messages.Plan,messages.Cliente" />
+   	
+   	<include file="struts-admin.xml"></include>
+   	<include file="struts-public.xml"></include>
+
+</struts>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.ClienteCoach" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="cliente_coach">
+        <composite-id class="personaltrainer.model.ClienteCoachId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="idCliente" type="int">
+                <column name="id_cliente"/>
+            </key-property>
+            <key-property name="idCoach" type="int">
+                <column name="id_coach"/>
+            </key-property>
+        </composite-id>
+        <many-to-one class="personaltrainer.model.Cliente" embed-xml="true" fetch="select" insert="false" name="cliente" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="id_cliente" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Coach" embed-xml="true" fetch="select" insert="false" name="coach" not-found="exception" optimistic-lock="true" unique="false" update="false">
+            <column name="id_coach" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

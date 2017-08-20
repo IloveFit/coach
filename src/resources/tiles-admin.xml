@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>    
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+  	<definition name="administratorLayout" template="/administrator/tiles/administrator-template.jsp">
+        <put-attribute name="title" value="Personal Trainer - Panel de control" />
+        <put-attribute name="header" value="/administrator/tiles/header.jsp" />
+        <put-attribute name="menu" value="/administrator/tiles/menu.jsp" />
+        <put-attribute name="titleContent" value="Personal Trainer - Panel de control" />
+        <put-attribute name="top" value="/administrator/tiles/top.jsp" />
+        <put-attribute name="content" value="/blank.jsp" />
+        <put-attribute name="footer" value="/administrator/tiles/footer.jsp" />
+    </definition>
+    
+    <definition name="administratorErrorLayout" template="/administrator/tiles/error-template.jsp">
+    	<put-attribute name="title" value="Error" />
+    	<put-attribute name="content" value="/blank.jsp" />
+    	<put-attribute name="footer" value="/administrator/indexFooter.jsp" />
+    </definition>
+    
+    <definition name="administrator.home" extends="administratorLayout">
+    	<put-attribute name="content" value="/administrator/home.jsp" />
+    </definition>
+    <definition name="administrator.coach.alta" extends="administratorLayout">
+    	<put-attribute name="titleContent" value="Administración Coach" />
+    	<put-attribute name="content" value="/administrator/coach/adminCoach.jsp" />
+    </definition>
+    <definition name="administrator.coach.perfil" extends="administratorLayout">
+    	<put-attribute name="titleContent" value="Perfil del coach" />
+    	<put-attribute name="content" value="/administrator/coach/perfil.jsp" />
+    </definition>
+    <definition name="administrator.loginError" extends="administratorErrorLayout">
+    	<put-attribute name="content" value="/administrator/loginError.jsp" />
+    </definition>
+    
+    <definition name="administrator.ejercicio.alta" extends="administratorLayout">
+    	<put-attribute name="titleContent" value="Administración Ejercicios" />
+    	<put-attribute name="content" value="/administrator/ejercicio/adminEjercicio.jsp" />
+    </definition>
+    <definition name="administrator.rutina.alta" extends="administratorLayout">
+    	<put-attribute name="titleContent" value="Administración Rutinas" />
+    	<put-attribute name="content" value="/administrator/rutina/adminRutina.jsp" />
+    </definition>
+    <definition name="administrator.plan.alta" extends="administratorLayout">
+    	<put-attribute name="titleContent" value="Administración Planes" />
+    	<put-attribute name="content" value="/administrator/plan/adminPlan.jsp" />
+    </definition>
+	<definition name="administrator.mensajes" extends="administratorLayout">
+    	<put-attribute name="titleContent" value="Tickets" />
+    	<put-attribute name="content" value="/administrator/mensajes/adminMensajes.jsp" />
+    </definition>
+</tiles-definitions>

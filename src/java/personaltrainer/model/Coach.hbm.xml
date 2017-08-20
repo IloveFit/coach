@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.Coach" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="coach">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="personaltrainer.model.Catalogo" embed-xml="true" fetch="select" insert="true" name="catalogo" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="tipo" not-null="true"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nombre" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="pass" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="pass" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="email" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="admin" optimistic-lock="true" type="string" unique="false">
+            <column length="1" name="admin" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="avatar" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="avatar"/>
+        </property>
+        <property generated="never" lazy="false" name="fechaRegistro" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="fecha_registro" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="clienteCoaches" optimistic-lock="true" sort="unsorted" table="cliente_coach">
+            <key on-delete="noaction">
+                <column name="id_coach" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.ClienteCoach" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="mensajeses" optimistic-lock="true" order-by="fecha desc" table="mensajes">
+            <key on-delete="noaction">
+                <column name="id_coach" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Mensajes" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

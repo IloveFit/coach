@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.Mensajes" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="mensajes">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="personaltrainer.model.Cliente" embed-xml="true" fetch="select" insert="true" name="cliente" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_cliente" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Coach" embed-xml="true" fetch="select" insert="true" name="coach" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_coach" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Mensajes" embed-xml="true" fetch="select" insert="true" name="mensajes" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_mensaje_padre"/>
+        </many-to-one>
+        <property generated="never" lazy="false" name="asunto" optimistic-lock="true" type="string" unique="false">
+            <column length="100" name="asunto" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="mensaje" optimistic-lock="true" type="string" unique="false">
+            <column length="2500" name="mensaje" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="fecha" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="19" name="fecha" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="leido" optimistic-lock="true" type="string" unique="false">
+            <column length="1" name="leido" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="tipoMensaje" optimistic-lock="true" type="int" unique="false">
+            <column name="tipo_mensaje" not-null="true"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="mensajeses" optimistic-lock="true" order-by="fecha asc" table="mensajes">
+            <key on-delete="noaction">
+                <column name="id_mensaje_padre"/>
+            </key>
+            <one-to-many class="personaltrainer.model.Mensajes" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

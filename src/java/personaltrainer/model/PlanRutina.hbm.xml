@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.PlanRutina" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="plan_rutina">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="personaltrainer.model.Plan" embed-xml="true" fetch="select" insert="true" name="plan" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_plan" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="personaltrainer.model.Rutina" embed-xml="true" fetch="select" insert="true" name="rutina" not-found="exception" optimistic-lock="true" unique="false" update="true">
+            <column name="id_rutina" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

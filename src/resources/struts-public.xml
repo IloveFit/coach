@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- Zona publica -->
+	<package name="public" namespace="/" extends="struts-default">
+		<result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+        </result-types>
+	
+		<action name="">
+			<result type="tiles">public.home</result>
+		</action>
+	</package>
+	
+	<package name="cliente" namespace="/cliente" extends="public">
+		<action name="registro" class="personaltrainer.action.ClienteAction" method="registro">
+			<result name="success" type="tiles">public.completarRegistro</result>
+			<result name="error" type="tiles">public.registro</result>
+			<result name="input" type="tiles">public.registro</result>
+		</action>
+	</package>
+</struts>

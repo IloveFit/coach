@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14-ago-2017 23:50:33 by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="ilovefitcoach" dynamic-insert="false" dynamic-update="false" mutable="true" name="personaltrainer.model.Rutina" optimistic-lock="version" polymorphism="implicit" select-before-update="false" table="rutina">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="nombre" optimistic-lock="true" type="string" unique="false">
+            <column length="45" name="nombre"/>
+        </property>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="rutinaEjercicios" optimistic-lock="true" sort="unsorted" table="rutina_ejercicio" cascade="save-update">
+            <key on-delete="noaction">
+                <column name="id_rutina" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.RutinaEjercicio" embed-xml="true" not-found="exception"/>
+        </set>
+        <set embed-xml="true" fetch="select" inverse="true" lazy="true" mutable="true" name="planRutinas" optimistic-lock="true" sort="unsorted" table="plan_rutina">
+            <key on-delete="noaction">
+                <column name="id_rutina" not-null="true"/>
+            </key>
+            <one-to-many class="personaltrainer.model.PlanRutina" embed-xml="true" not-found="exception"/>
+        </set>
+    </class>
+</hibernate-mapping>

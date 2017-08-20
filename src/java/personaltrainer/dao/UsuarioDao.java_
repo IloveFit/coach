@@ -1,0 +1,20 @@
+package personaltrainer.dao;
+
+import java.util.List;
+
+import personaltrainer.model.Usuario;
+
+public interface UsuarioDao {
+
+	Usuario getUserByCredentials(String userId, String password);
+	
+	Usuario altaUsuario (Usuario usuario);
+	
+	void eliminarUsuario (String email);
+	
+	Usuario modificarUsuario (Usuario usuario);
+	
+	Usuario getUsuario (String email);
+	
+	List<Usuario> listarUsuarios ();
+}

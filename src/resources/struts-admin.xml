@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	
+	<!-- Zona de administracion -->
+	<package name="administrator" namespace="/administrator" extends="struts-default">
+		<result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+        </result-types>
+        
+        <interceptors>
+			<interceptor name="authenticationAdmin" class="personaltrainer.interceptors.AuthenticationAdminInterceptor"></interceptor>
+			<interceptor-stack name="authAdminStack">
+				<interceptor-ref name="authenticationAdmin"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+			
+			<interceptor name="authenticationCoach" class="personaltrainer.interceptors.AuthenticationCoachInterceptor"></interceptor>
+			<interceptor-stack name="authCoachStack">
+				<interceptor-ref name="authenticationCoach"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<global-results>
+			<result name="login" type="redirect">/administrator/login.jsp</result>
+			<result type="tiles" name="home">administrator.home</result>
+		</global-results>
+        
+		<action name="home">
+			<result>/administrator/login.jsp</result>
+		</action>
+		<action name="loginCoach" class="personaltrainer.action.administrator.CoachAction" method="login">
+			<result type="tiles" name="success">administrator.home</result>
+ 			<result name="error">/administrator/login.jsp</result>
+ 			<result name="input">/administrator/login.jsp</result>
+		</action>
+		<action name="logout" class="personaltrainer.action.administrator.CoachAction" method="logout">
+			<result>/administrator/login.jsp</result>
+		</action>
+	</package>
+	
+	<package name="coach" namespace="/administrator/coach" extends="administrator">
+		<action name="registro" class="personaltrainer.action.administrator.CoachAction" method="registro">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<result type="tiles" >administrator.coach.alta</result>
+		</action>
+		<action name="alta" class="personaltrainer.action.administrator.CoachAction" method="alta">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+	       		<param name="allowedTypes">text/plain</param>
+	       		<param name="maximumSize">1024000</param>
+	  	    </interceptor-ref>
+			<result name="success" type="tiles">administrator.coach.alta</result>
+			<result name="input" type="tiles">administrator.coach.alta</result>
+			<result name="error" type="tiles">administrator.coach.alta</result>
+		</action>
+		<action name="eliminar" class="personaltrainer.action.administrator.CoachAction" method="eliminar">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.coach.alta</result>
+			<result name="error">administrator.coach.alta</result>
+		</action>
+		<action name="modificar" class="personaltrainer.action.administrator.CoachAction" method="modificar">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.coach.alta</result>
+			<result name="error" type="tiles">administrator.coach.alta</result>
+			<result name="input" type="tiles">administrator.coach.alta</result>
+		</action>
+		<action name="perfil" class="personaltrainer.action.administrator.CoachAction" method="perfil">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.coach.perfil</result>
+			<result name="error" type="tiles">administrator.coach.perfil</result>
+			<result name="input" type="tiles">administrator.coach.perfil</result>
+		</action>
+		<action name="modificarDatos" class="personaltrainer.action.administrator.CoachAction" method="modificarDatos">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.coach.perfil</result>
+			<result name="error" type="tiles">administrator.coach.perfil</result>
+			<result name="input" type="tiles">administrator.coach.perfil</result>
+		</action>
+		<action name="modificarPassword" class="personaltrainer.action.administrator.CoachAction" method="modificarPassword">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.coach.perfil</result>
+			<result name="error" type="tiles">administrator.coach.perfil</result>
+			<result name="input" type="tiles">administrator.coach.perfil</result>
+		</action>
+		<action name="modificarAvatar" class="personaltrainer.action.administrator.CoachAction" method="modificarAvatar">
+			<interceptor-ref name="authAdminStack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+	       		<param name="allowedTypes">text/plain</param>
+	       		<param name="maximumSize">1024000</param>
+	  	    </interceptor-ref>
+			<result name="success" type="tiles">administrator.coach.perfil</result>
+			<result name="error" type="tiles">administrator.coach.perfil</result>
+			<result name="input" type="tiles">administrator.coach.perfil</result>
+		</action>
+		<action name="top" class="personaltrainer.action.administrator.CoachAction" method="top">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result>/administrator/coach/top.jsp</result>
+		</action>
+	</package>
+	
+	<package name="ejercicio" namespace="/administrator/ejercicio" extends="administrator">
+		<action name="registro" class="personaltrainer.action.administrator.EjercicioAction" method="registro">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result type="tiles" >administrator.ejercicio.alta</result>
+		</action>
+		<action name="alta" class="personaltrainer.action.administrator.EjercicioAction" method="alta">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+	       		<param name="allowedTypes">
+	                image/png,image/gif,image/jpeg,image/pjpeg,image/jpg,video/x-ms-rmvb,video/x-ms-wmv,video/x-ms-avi,
+	                video/fli,video/x-fli,video/x-atomic3d-feature,video/gl,video/x-gl,video/x-isvideo,video/mpeg,video/x-motion-jpeg,video/quicktime,video/x-sgi-movie,
+	                video/x-mpeg,video/vnd.rn-realvideo,video/x-scm
+	            </param>
+	  	    </interceptor-ref>
+			<result name="success" type="tiles">administrator.ejercicio.alta</result>
+			<result name="input" type="tiles">administrator.ejercicio.alta</result>
+			<result name="error" type="tiles">administrator.ejercicio.alta</result>
+		</action>
+		<action name="eliminar" class="personaltrainer.action.administrator.EjercicioAction" method="eliminar">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.ejercicio.alta</result>
+			<result name="error" type="tiles">administrator.ejercicio.alta</result>
+			<result name="input" type="tiles">administrator.ejercicio.alta</result>
+		</action>
+		<action name="modificar" class="personaltrainer.action.administrator.EjercicioAction" method="modificar">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<interceptor-ref name="fileUpload">
+	       		<param name="allowedTypes">
+	                image/png,image/gif,image/jpeg,image/pjpeg,image/jpg,video/x-ms-rmvb,video/x-ms-wmv,video/x-ms-avi,
+	                video/fli,video/x-fli,video/x-atomic3d-feature,video/gl,video/x-gl,video/x-isvideo,video/mpeg,video/x-motion-jpeg,video/quicktime,video/x-sgi-movie,
+	                video/x-mpeg,video/vnd.rn-realvideo,video/x-scm
+	            </param>
+	  	    </interceptor-ref>
+			<result name="success" type="tiles">administrator.ejercicio.alta</result>
+			<result name="error" type="tiles">administrator.ejercicio.alta</result>
+			<result name="input" type="tiles">administrator.ejercicio.alta</result>
+		</action>
+	</package>
+	
+	<package name="rutina" namespace="/administrator/rutina" extends="administrator">
+		<action name="registro" class="personaltrainer.action.administrator.RutinaAction" method="registro">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result type="tiles" >administrator.rutina.alta</result>
+		</action>
+		<action name="alta" class="personaltrainer.action.administrator.RutinaAction" method="alta">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.rutina.alta</result>
+			<result name="input" type="tiles">administrator.rutina.alta</result>
+			<result name="error" type="tiles">administrator.rutina.alta</result>
+		</action>
+		<action name="eliminar" class="personaltrainer.action.administrator.RutinaAction" method="eliminar">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.rutina.alta</result>
+			<result name="error" type="tiles">administrator.rutina.alta</result>
+		</action>
+		<action name="modificar" class="personaltrainer.action.administrator.RutinaAction" method="modificar">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.rutina.alta</result>
+			<result name="error" type="tiles">administrator.rutina.alta</result>
+			<result name="input" type="tiles">administrator.rutina.alta</result>
+		</action>
+		<action name="detallerutina" class="personaltrainer.action.administrator.RutinaAction" method="detallerutina">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success">/administrator/rutina/detalleRutina.jsp</result>
+			<result name="error">/administrator/rutina/detalleRutina.jsp</result>
+			<result name="input">/administrator/rutina/detalleRutina.jsp</result>
+		</action>
+	</package>
+	
+	<package name="plan" namespace="/administrator/plan" extends="administrator">
+		<action name="registro" class="personaltrainer.action.administrator.PlanAction" method="registro">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result type="tiles" >administrator.plan.alta</result>
+		</action>
+		<action name="alta" class="personaltrainer.action.administrator.PlanAction" method="alta">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.plan.alta</result>
+			<result name="input" type="tiles">administrator.plan.alta</result>
+			<result name="error" type="tiles">administrator.plan.alta</result>
+		</action>
+		<action name="eliminar" class="personaltrainer.action.administrator.PlanAction" method="eliminar">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.plan.alta</result>
+			<result name="error" type="tiles">administrator.plan.alta</result>
+		</action>
+		<action name="modificar" class="personaltrainer.action.administrator.PlanAction" method="modificar">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.plan.alta</result>
+			<result name="error" type="tiles">administrator.plan.alta</result>
+			<result name="input" type="tiles">administrator.plan.alta</result>
+		</action>
+		<action name="detallePlan" class="personaltrainer.action.administrator.PlanAction" method="detallePlan">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success">/administrator/plan/detallePlan.jsp</result>
+			<result name="error">/administrator/plan/detallePlan.jsp</result>
+			<result name="input">/administrator/plan/detallePlan.jsp</result>
+		</action>
+	</package>
+	
+	<package name="mensajes" namespace="/administrator/mensajes" extends="administrator">
+		<action name="refrescarCabecera" class="personaltrainer.action.administrator.MensajesAction" method="refrescarCabecera">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result>/administrator/cabecera/mensajesCabecera.jsp</result>
+		</action>
+		<action name="inicio" class="personaltrainer.action.administrator.MensajesAction" method="inicio">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.mensajes</result>
+			<result name="error" type="tiles">administrator.mensajes</result>
+			<result name="input" type="tiles">administrator.mensajes</result>
+		</action>
+		<action name="alta" class="personaltrainer.action.administrator.MensajesAction" method="alta">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success" type="tiles">administrator.mensajes</result>
+			<result name="error" type="tiles">administrator.mensajes</result>
+			<result name="input" type="tiles">administrator.mensajes</result>
+		</action>
+		<action name="leer" class="personaltrainer.action.administrator.MensajesAction" method="leer">
+			<interceptor-ref name="authCoachStack"></interceptor-ref>
+			<result name="success">/blank.jsp</result>
+			<result name="error">/blank.jsp</result>
+			<result name="input">/blank.jsp</result>
+		</action>
+	</package>
+
+</struts>
