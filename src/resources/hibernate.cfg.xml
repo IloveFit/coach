@@ -6,9 +6,9 @@
 	<session-factory>
 		<!-- Database connection properties - Driver, URL, user, password -->
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/personaltrainer</property>
-		<property name="hibernate.connection.username">adminxNiAUCa</property>
-		<property name="hibernate.connection.password">DtKajv-UUzP2</property>
+		<property name="hibernate.connection.url">jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/coach</property>
+		<property name="hibernate.connection.username">adminGXLAEqV</property>
+		<property name="hibernate.connection.password">u9m1gnG31QQy</property>
 		<!-- Connection Pool Size -->
 		<property name="hibernate.connection.pool_size">1000</property>
 		

@@ -234,7 +234,7 @@
 	        	<artifactId>maven-war-plugin</artifactId>
 	        	<version>2.3</version>
 	        	<configuration>
-	          		<warName>personaltrainer</warName>
+	          		<warName>coach</warName>
 	        		</configuration>
 	      		</plugin>
    		</plugins>
