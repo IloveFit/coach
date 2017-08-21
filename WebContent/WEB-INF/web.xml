@@ -27,6 +27,10 @@
 			<param-value>tiles-admin.xml,tiles-public.xml</param-value>  
 		</context-param> 
 	
+		<context-param>
+  			<param-name>log4jConfiguration</param-name>
+  			<param-value>WEB-INF/log4j2.xml</param-value>
+		</context-param>
 		<!-- web services axis -->
 
 	    <listener>
